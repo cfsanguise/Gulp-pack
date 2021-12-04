@@ -39,6 +39,7 @@ function compileScss() {
 function minifyCss() {
     return src('src/css/*.css')
     .pipe(prefix())
+    .pipe(rename({suffix: '.min', prefix: ''}))
     .pipe(minify())
     .pipe(dest('./dist/css'))
     .pipe(browserSync.stream());
@@ -79,3 +80,4 @@ function watchTask() {
 }
 
 exports.default = parallel(series(minifyHtml, minifyCss, compileScss, jsmin, optimizeimg, optimizeIcons, copyFonts, watchTask), server)
+
